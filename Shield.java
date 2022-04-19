@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Shield {
 
@@ -13,8 +15,20 @@ public class Shield {
         names.add("Jemma Simmons");
 
         // TODO 1 : map names to agents list
+        // -> https://github.com/bastienwcs/quest-java-stream2-demo/blob/master/Step5.java
+        //    "nur umgedreht..."
         List<Agent> agents = new ArrayList<>();
 
+        agents = names.stream()
+            .map(new Function<String, Agent>() {
+                @Override
+                public Agent apply(String agent) {
+                    String[] firstLastName = agent.split(" ");
+                    return new Agent(firstLastName[0], firstLastName[1]);
+                }
+            })
+            .collect(Collectors.toList());
+        
         showAgents(agents);
     }
 
